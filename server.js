@@ -529,6 +529,9 @@ sh -c "timeout 5 node main.js"`;
         }
     });
 });
+app.get("/downloads/haq-agent", (req, res) => {
+    res.download(__dirname + "/downloads/haq-agent.zip", "haq-agent.zip");
+});
 // ================================
 // 🧠 MAIN AI ROUTE
 // ================================
