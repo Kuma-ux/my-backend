@@ -1408,8 +1408,10 @@ app.post("/ask", async (req, res) => {
 
         const data = await response.json();
 
+        console.log("GROQ RAW RESPONSE:", JSON.stringify(data, null, 2));
+
         return res.json({
-            reply: data.response || "No response"
+            reply: data?.choices?.[0]?.message?.content || "No response from AI"
         });
 
 
