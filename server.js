@@ -8,7 +8,7 @@ const multer = require("multer");
 const path = require("path");
 const { randomUUID } = require("crypto");
 const Jimp = require("jimp");
-import dotenv from "dotenv";
+const dotenv = require("dotenv");
 
 const app = express();
 dotenv.config();
