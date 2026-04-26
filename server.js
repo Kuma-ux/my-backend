@@ -1391,18 +1391,10 @@ app.post("/ask", async (req, res) => {
                "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
            },
            body: JSON.stringify({
-               model: "llama3-8b-8192",   // or mixtral-8x7b-32768
+               model: "llama-3.1-8b-instant",
                messages: [
-                   {
-                       role: "system",
-                       content: "You are a helpful cybersecurity learning assistant."
-                   },
-                   {
-                       role: "user",
-                       content: prompt
-                   }
+                   { role: "user", content: prompt }
                    ],
-               temperature: 0.7
            })
         });
 
@@ -1413,7 +1405,7 @@ app.post("/ask", async (req, res) => {
 
         if (!response.ok) {
             return res.json({
-                reply: `Groq API error: ${data.error?.message || "Unknown error"}`
+                reply: JSON.stringify(data, null, 2)
             });
         }
 
