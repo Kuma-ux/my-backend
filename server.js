@@ -8,8 +8,10 @@ const multer = require("multer");
 const path = require("path");
 const { randomUUID } = require("crypto");
 const Jimp = require("jimp");
+import dotenv from "dotenv";
 
 const app = express();
+dotenv.config();
 app.use(cors());
 app.use(express.json());
 
@@ -1380,17 +1382,27 @@ app.post("/ask", async (req, res) => {
         }
 
         // ================================
-        // 🤖 FALLBACK (OLLAMA)
+        // 🤖 GROQ AI (CLOUD)
         // ================================
-        const response = await fetch("http://localhost:11434/api/generate", {
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
            method: "POST",
            headers: {
-               "Content-Type": "application/json"
+               "Content-Type": "application/json",
+               "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
            },
            body: JSON.stringify({
-               model: "phi3:mini",
-               prompt: prompt,
-               stream: false
+               model: "llama3-8b-8192",   // or mixtral-8x7b-32768
+               messages: [
+                   {
+                       role: "system",
+                       content: "You are a helpful cybersecurity learning assistant."
+                   },
+                   {
+                       role: "user",
+                       content: prompt
+                   }
+                   ],
+               temperature: 0.7
            })
         });
 
