@@ -9,10 +9,12 @@ const path = require("path");
 const { randomUUID } = require("crypto");
 const Jimp = require("jimp");
 const dotenv = require("dotenv");
+const agentRoutes = require("./routes/agent");
 
 const app = express();
 dotenv.config();
 app.use(cors());
+app.use("/agent", agentRoutes);
 app.use(express.json());
 
 app.use("/network", networkRoutes);
