@@ -1408,10 +1408,17 @@ app.post("/ask", async (req, res) => {
 
         const data = await response.json();
 
-        console.log("GROQ RAW RESPONSE:", JSON.stringify(data, null, 2));
+        console.log("GROQ STATUS:", response.status);
+        console.log("GROQ DATA:", JSON.stringify(data, null, 2));
+
+        if (!response.ok) {
+            return res.json({
+                reply: `Groq API error: ${data.error?.message || "Unknown error"}`
+            });
+        }
 
         return res.json({
-            reply: data?.choices?.[0]?.message?.content || "No response from AI"
+            reply: data?.choices?.[0]?.message?.content ?? "Empty AI response"
         });
 
 
